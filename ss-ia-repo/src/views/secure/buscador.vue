@@ -72,3 +72,10 @@
     </div>
   </div>
 </template>
+
+<script>
+  export default {
+    name: 'Poject_search'
+  }
+
+</script>
