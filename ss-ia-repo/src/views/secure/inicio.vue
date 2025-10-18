@@ -1,5 +1,5 @@
 <template>
-  <div class="home-container">
+    <div class="home-container">
     
     <section class="hero-section">
       <h1>Repositorio Digital de la FESC: Inteligencia Artificial y Servicio Social</h1>
@@ -8,12 +8,12 @@
         Explora y gestiona proyectos innovadores. Conecta el conocimiento académico con soluciones reales de IA y compromiso social.
       </p>
 
-      <div class="cta-buttons">
-        <router-link to="/buscador" class="btn btn-primary">
+      <div class="cta-buttons"  >
+        <router-link  to="/fescia/buscador" class="btn btn-primary">
           Explorar Proyectos Ahora
         </router-link>
         
-        <router-link to="/asistente" class="btn btn-secondary">
+        <router-link to="/fescia/asistente" class="btn btn-secondary">
           Preguntar al Asistente GPT-5
         </router-link>
       </div>
@@ -21,15 +21,18 @@
 
     </div>
 </template>
+
 <script>
-export default {
-  // AJUSTE CLAVE: El nombre del componente coincide con tu archivo
-  name: 'InicioView' 
+
+export default{
+    name: 'fesciaInicio',
+    setup() {
+        
+    },
 }
 </script>
 
-<style scoped>
-/* Contenedor principal sin padding para que la sección hero ocupe el ancho */
+<style>
 .home-container {
   padding: 0; 
   text-align: center;
@@ -95,13 +98,4 @@ export default {
   background-color: #35a473;
 }
 
-/* Media query para mejorar la experiencia en pantallas pequeñas */
-@media (max-width: 600px) {
-    .cta-buttons {
-        flex-direction: column;
-    }
-    .btn {
-        width: 100%; /* Botones de ancho completo en móvil */
-    }
-}
 </style>

@@ -43,7 +43,7 @@
           </button>
         </div>
 
-        <div v-if="results.length > 0" class="results-list">
+        <div v-if="results.length >= 0" class="results-list">
           <h2>Resultados encontrados ({{ results.length }})</h2>
           
           <div v-for="project in results" :key="project.id" class="project-card" role="article">
@@ -74,8 +74,8 @@
 </template>
 
 <script>
-  export default {
-    name: 'Poject_search'
-  }
+export default {
+  name: 'fescia_buscador'
+}
 
 </script>
