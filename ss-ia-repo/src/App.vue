@@ -1,27 +1,28 @@
 <template>
-  <router-view>
-  </router-view>
-  
+  <v-app class="app-full-size"> <v-main class="background-full full-height-main"> 
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
-<script>
-export default {
-  // AJUSTE CLAVE: El nombre del componente coincide con tu archivo
-  name: 'App'
+
+<style>
+/* ... otros estilos ... */
+
+.app-full-size {
+    /* Anular el padding/margen que Vuetify aplica a veces al v-app o v-main */
+    padding-top: 0 !important;
+    margin-top: 0 !important;
 }
-</script>
 
-<style scoped>
-/* Contenedor principal sin padding para que la sección hero ocupe el ancho */
+.background-full {
+    background-color: white !important; 
+}
 
-
-
-/* Media query para mejorar la experiencia en pantallas pequeñas */
-@media (max-width: 600px) {
-    .cta-buttons {
-        flex-direction: column;
-    }
-    .btn {
-        width: 100%; /* Botones de ancho completo en móvil */
-    }
+.full-height-main {
+    /* Asegurar 100% de la altura de la ventana */
+    min-height: 100vh !important;
+    
+    /* 🔑 CLAVE ADICIONAL: Asegurar que el ancho también sea 100% si hay limitación */
+    width: 100vw !important;
 }
 </style>

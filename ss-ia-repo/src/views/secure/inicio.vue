@@ -1,101 +1,93 @@
 <template>
-    <div class="home-container">
+  <v-container fluid class="pa-0"> 
     
-    <section class="hero-section">
-      <h1>Repositorio Digital de la FESC: Inteligencia Artificial y Servicio Social</h1>
-      
-      <p class="subtitle">
-        Explora y gestiona proyectos innovadores. Conecta el conocimiento académico con soluciones reales de IA y compromiso social.
-      </p>
+    <v-sheet
+      class="hero-section text-left"
+      color="#F0F8FF" 
+      min-height="450"
+      elevation="0" 
+    >
+      <v-container class="py-10 px-6"> 
+        <v-row>
+          
+          <v-col cols="12" md="7">
+            
+            <h1 
+              class="text-h4 text-sm-h3 mb-2 font-weight-black" 
+              style="color: #333333; line-height: 1.1; white-space: nowrap;"
+            >
+              Repositorio Digital - FESC
+            </h1>
+            
+            <h2 class="text-h5 text-sm-h4 mb-6 font-weight-medium" style="color: #555555;">
+              Inteligencia Artificial & Servicio Social
+            </h2>
+            
+            <p class="text-subtitle-1 mb-8" style="max-width: 500px; color: #777777;">
+              Explora y gestiona proyectos de vanguardia en Inteligencia Artificial y reportes de Servicio Social de la comunidad FESC. Conecta el conocimiento académico con la solución de problemas reales.
+            </p>
 
-      <div class="cta-buttons"  >
-        <router-link  to="/fescia/buscador" class="btn btn-primary">
-          Explorar Proyectos Ahora
-        </router-link>
-        
-        <router-link to="/fescia/asistente" class="btn btn-secondary">
-          Preguntar al Asistente GPT-5
-        </router-link>
-      </div>
-    </section>
+            <v-divider style="max-width: 50px;" class="mb-8"></v-divider>
 
-    </div>
+            <div class="cta-buttons d-flex flex-wrap" style="gap: 15px;">
+              
+              <v-btn 
+                large 
+                outlined
+                color="primary" 
+                class="px-6 font-weight-medium" 
+                to="/buscador"
+                elevation="0"
+              >
+                <v-icon left>mdi-magnify</v-icon> EXPLORAR
+              </v-btn>
+              
+              <v-btn 
+                large 
+                text
+                color="grey darken-2" 
+                class="px-6 font-weight-medium" 
+                to="/asistente"
+                elevation="0"
+              >
+                Preguntar al Asistente
+              </v-btn>
+            </div>
+            
+          </v-col>
+          
+          <v-col cols="12" md="5" class="d-none d-md-flex justify-center align-center">
+            <v-img
+              :src="robotImage"  alt="Interacción humano-robot e IA"
+              contain 
+              max-height="400px" 
+            ></v-img>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-sheet>
+
+  </v-container>
 </template>
 
 <script>
+// ¡IMPORTACIÓN CLAVE! Esto asegura que Webpack procese correctamente la imagen.
+import robotImage from '@/assets/image_268ab0.jpg'; 
 
 export default{
-    name: 'fesciaInicio',
-    setup() {
-        
-    },
+  name: 'home_main_with_image_fix',
+  data() {
+    return {
+      // Hacemos la imagen accesible en el template a través de esta propiedad
+      robotImage: robotImage 
+    };
+  },
 }
 </script>
 
-<style>
-.home-container {
-  padding: 0; 
-  text-align: center;
-}
-
-/* ---------------- HERO SECTION ---------------- */
+<style scoped>
 .hero-section {
-  background-color: #f0f4f8; 
-  color: #1a2a40; 
-  padding: 80px 20px; 
-  border-radius: 0 0 15px 15px;
-}
-
-.hero-section h1 {
-  font-size: clamp(2rem, 5vw, 2.8rem); 
-  margin-bottom: 15px;
-  line-height: 1.2;
-}
-
-.subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
-  color: #555;
-  margin-bottom: 40px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ---------------- BOTONES CTA  ---------------- */
-.cta-buttons {
-  margin-top: 30px;
   display: flex;
-  flex-wrap: wrap; 
-  justify-content: center;
-  gap: 20px; 
+  align-items: center; 
 }
-
-.btn {
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  text-decoration: none; 
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-}
-
-.btn-primary {
-  background-color: #007bff; /* Azul profesional */
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-.btn-secondary {
-  background-color: #42b983; /* Verde Vue, color de tecnología */
-  color: white;
-}
-
-.btn-secondary:hover {
-  background-color: #35a473;
-}
-
 </style>
