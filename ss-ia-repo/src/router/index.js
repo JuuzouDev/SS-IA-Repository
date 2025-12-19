@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 const routes = [
   {
     path: '/',
-    redirect: 'inicio', // cambie inicio por login
+    redirect: 'Inicio', // cambie logingView por inicio
    // component: () => import('@/views/secure/login.vue')
   },
   {
