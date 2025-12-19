@@ -1,21 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-
 const routes = [
   {
     path: '/',
     redirect: 'inicio',
   },
   {
-    path: '/inicio',
-    name: 'inicio',
-    component: () => import('@/views/secure/home_main.vue'), //cambie ruta
-    meta: { requiresAuth: false } // Meta definido correctamente
+  path: '/inicio',
+  name: 'inicio',
+  component: () => import('@/views/secure/home_main.vue'),
+  meta: { requiresAuth: false }
   },
   {
     path: '/buscador',
     name: 'buscador',
     component: () => import('@/views/secure/buscador.vue'),
+    meta: { requiresAuth : false} 
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/secure/loginView.vue'),
     meta: { requiresAuth : false} 
   },
 ];
