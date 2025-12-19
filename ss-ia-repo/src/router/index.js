@@ -4,7 +4,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 const routes = [
   {
     path: '/',
-    redirect: 'inicio',
+    redirect: 'inicio', // cambie inicio por login
+   // component: () => import('@/views/secure/login.vue')
   },
   {
     path: '/inicio',

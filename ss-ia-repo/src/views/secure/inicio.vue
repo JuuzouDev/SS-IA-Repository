@@ -29,28 +29,30 @@
 
             <v-divider style="max-width: 50px;" class="mb-8"></v-divider>
 
-            <div class="cta-buttons d-flex flex-wrap" style="gap: 15px;">
+            <div class="cta-buttons d-flex flex-wrap align-center" style="gap: 15px;">
               
               <v-btn 
                 large 
-                outlined
+                depressed
                 color="primary" 
-                class="px-6 font-weight-medium" 
+                class="white--text font-weight-bold" 
+                style="width: 280px; height: 50px;"
                 to="/buscador"
-                elevation="0"
               >
-                <v-icon left>mdi-magnify</v-icon> EXPLORAR
+                <v-icon left color="white">mdi-magnify</v-icon> EXPLORAR REPOSITORIO
               </v-btn>
               
               <v-btn 
                 large 
-                text
-                color="grey darken-2" 
-                class="px-6 font-weight-medium" 
+                depressed
+                color="primary" 
+                class="white--text font-weight-bold" 
+                style="width: 280px; height: 50px;"
                 to="/asistente"
-                elevation="0"
+
               >
-                Preguntar al Asistente
+                <v-icon left color="white">mdi-robot-outline</v-icon>
+                PREGUNTAR AL ASISTENTE
               </v-btn>
             </div>
             
