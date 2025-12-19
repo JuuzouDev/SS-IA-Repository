@@ -1,4 +1,5 @@
 <template>
+  
   <v-container fluid class="pa-0"> 
     
     <v-sheet
@@ -8,6 +9,7 @@
       elevation="0" 
     >
       <v-container class="py-10 px-6"> 
+        
         <v-row>
           
           <v-col cols="12" md="7">
