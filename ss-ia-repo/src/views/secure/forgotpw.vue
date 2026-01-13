@@ -13,11 +13,14 @@
         <v-card elevation="8" max-width="450" class="pa-6" style="margin-left: 60px;">
           
           <v-card-title class="text-h4 font-weight-black mb-2">
-            Iniciar Sesión
+            ¿Olvidaste tu
+          </v-card-title>
+          <v-card-title class="text-h4 font-weight-black mb-2">
+            contraseña?
           </v-card-title>
 
           <v-card-subtitle class="text-body-1 mb-6">
-            Ingresa tus credenciales para acceder.
+            Ingresa tu correo registrado
           </v-card-subtitle>
 
           <v-form @submit.prevent="handleLogin">
@@ -30,14 +33,6 @@
               class="mb-3"
             />
 
-            <v-text-field
-              label="Contraseña"
-              v-model="password"
-              type="password"
-              variant="outlined"
-              prepend-inner-icon="mdi-lock-outline"
-              class="mb-5"
-            />
 
             <v-btn
               block
@@ -46,13 +41,13 @@
               type="submit"
               class="font-weight-bold"
             >
-              Entrar
+              Enviar
             </v-btn>
           </v-form>
 
           <div class="d-flex flex-column align-start mt-6">
-            <router-link to="/forgot-password" class="custom-link mb-3">
-              ¿Olvidaste tu contraseña?
+            <router-link to="/login" class="custom-link mb-3">
+              Inicia Sesion
             </router-link>
 
             

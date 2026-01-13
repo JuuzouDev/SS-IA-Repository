@@ -19,11 +19,23 @@ const routes = [
     meta: { requiresAuth : false} 
   },
   {
+    path: '/asistente',
+    name: 'asistente',
+    component: () => import('@/views/secure/asistente_virt.vue'),
+    meta: { requiresAuth : false}
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('@/views/secure/loginView.vue'),
     meta: { requiresAuth : false} 
   },
+  {
+    path: '/forgot-password',
+    name: 'forgot-password',
+    component: () => import('@/views/secure/forgotpw.vue'),
+    meta: { requiresAuth : false}
+  }, 
 ];
 
 const router = createRouter({
