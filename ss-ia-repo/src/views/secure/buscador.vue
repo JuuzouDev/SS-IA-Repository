@@ -26,11 +26,13 @@
           <input 
             type="number" 
             id="year-filter" 
-            v-model="filterYear" 
+            v-model.number="filterYear" 
             @keyup.enter="performSearch" 
             placeholder="Ej. 2024"
           >
         </div>
+        
+        <button class="btn-clear" @click="clearFilters">Limpiar Filtros</button>
       </aside>
 
       <main class="results-area">
@@ -48,27 +50,27 @@
           </button>
         </div>
 
-        <div v-if="results && results.length > 0" class="results-list">
-          <h2>Resultados encontrados ({{ results.length }})</h2>
+        <div v-if="filteredResults.length > 0" class="results-list">
+          <h2>Resultados encontrados ({{ filteredResults.length }})</h2>
           
-          <div v-for="project in results" :key="project.id" class="project-card" role="article">
+          <div v-for="project in filteredResults" :key="project.id" class="project-card" role="article">
             <h3>{{ project.title }}</h3>
             <p><strong>Autor(es):</strong> {{ project.author }}</p>
             <p><strong>Tipo de IA:</strong> <span class="tag">{{ project.ia_type }}</span></p>
             <p><strong>Año:</strong> {{ project.year }}</p>
             
-            <a href="#" class="details-link" @click.prevent>
+            <router-link 
+              :to="{ name: 'ProjectDetail', params: { id: project.id } }" 
+              class="details-link"
+            >
               Ver resumen completo →
-            </a>
+            </router-link>
           </div>
         </div>
 
-        <p v-else-if="!isLoading && searchPerformed" class="no-results">
-          No se encontraron proyectos.
-        </p>
-        <p v-else class="initial-message">
-          Usa la barra de búsqueda o los filtros para explorar.
-        </p>
+        <div v-else-if="!isLoading" class="no-results">
+          <p>No se encontraron proyectos que coincidan con tu búsqueda.</p>
+        </div>
       </main>
 
     </div>
@@ -84,9 +86,9 @@ export default {
       filterIA: '',
       filterYear: null,
       isLoading: false,
-      searchPerformed: true, // Lo dejamos en true para que veas los datos de inmediato
-      error: null,
-      results: [
+      searchPerformed: false,
+      // Base de datos local de ejemplo
+      allProjects: [
         {
           id: 1,
           title: "Detección de Anomalías en Imágenes Médicas",
@@ -108,30 +110,61 @@ export default {
           ia_type: "Deep Learning",
           year: 2022
         }
-      ]
+      ],
+      filteredResults: []
     }
+  },
+  mounted() {
+    // Cargar todos los proyectos al inicio
+    this.filteredResults = [...this.allProjects];
   },
   methods: {
     performSearch() {
       this.isLoading = true;
+      
+      // Simulamos un retraso de red
       setTimeout(() => {
+        this.filteredResults = this.allProjects.filter(project => {
+          const matchText = project.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+                            project.author.toLowerCase().includes(this.searchTerm.toLowerCase());
+          const matchIA = this.filterIA === '' || project.ia_type === this.filterIA;
+          const matchYear = !this.filterYear || project.year === this.filterYear;
+          
+          return matchText && matchIA && matchYear;
+        });
+        
         this.isLoading = false;
         this.searchPerformed = true;
-      }, 500);
+      }, 400);
+    },
+    clearFilters() {
+      this.searchTerm = '';
+      this.filterIA = '';
+      this.filterYear = null;
+      this.filteredResults = [...this.allProjects];
     }
   }
 }
 </script>
 
 <style scoped>
-.search-view-container { padding: 20px; color: #333; }
-.search-layout { display: flex; gap: 20px; }
-.filters-panel { width: 250px; background: #f8f9fa; padding: 15px; border-radius: 8px; }
+.search-view-container { padding: 20px; color: #333; max-width: 1200px; margin: 0 auto; }
+.search-layout { display: flex; gap: 20px; margin-top: 30px; }
+.filters-panel { width: 280px; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; height: fit-content; }
+.filter-group { margin-bottom: 20px; }
+.filter-group label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9em; }
+.filter-group select, .filter-group input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+
 .results-area { flex: 1; }
-.search-controls { display: flex; gap: 10px; margin-bottom: 20px; }
-.search-controls input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
-.project-card { border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-.tag { background: #e3f2fd; color: #0d6efd; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; }
-.details-link { color: #0d6efd; text-decoration: none; font-weight: bold; }
-.btn-search { background: #0d6efd; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+.search-controls { display: flex; gap: 10px; margin-bottom: 25px; }
+.search-controls input { flex: 1; padding: 12px; border: 1px solid #ced4da; border-radius: 6px; font-size: 1rem; }
+
+.project-card { border: 1px solid #eee; padding: 20px; margin-bottom: 20px; border-radius: 10px; background: #fff; transition: transform 0.2s, box-shadow 0.2s; }
+.project-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.tag { background: #e3f2fd; color: #0d6efd; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold; }
+.details-link { display: inline-block; margin-top: 15px; color: #0d6efd; text-decoration: none; font-weight: bold; }
+
+.btn-search { background: #0d6efd; color: white; border: none; padding: 0 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+.btn-clear { width: 100%; background: none; border: 1px solid #dee2e6; color: #6c757d; padding: 8px; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+.btn-clear:hover { background: #e9ecef; }
 </style>

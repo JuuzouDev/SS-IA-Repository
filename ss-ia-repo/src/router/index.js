@@ -36,6 +36,11 @@ const routes = [
     component: () => import('@/views/secure/forgotpw.vue'),
     meta: { requiresAuth : false}
   }, 
+  {
+  path: '/proyecto/:id',
+  name: 'ProjectDetail',
+  component: () => import('@/views/secure/projectdetail.vue')
+}
 ];
 
 const router = createRouter({
