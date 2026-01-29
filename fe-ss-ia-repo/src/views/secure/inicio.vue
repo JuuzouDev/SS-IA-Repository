@@ -54,7 +54,7 @@
 
               >
                 <v-icon left color="white">mdi-robot-outline</v-icon>
-                PREGUNTAR AL ASISTENTE
+                PREGUNTALE A GEMINI
               </v-btn>
             </div>
             
