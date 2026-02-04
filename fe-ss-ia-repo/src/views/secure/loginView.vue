@@ -7,7 +7,6 @@
       align="center"
       justify="center"
       class="fill-height"
-      
     >
       <v-col cols="12" sm="8" md="5" lg="4">
         <v-card elevation="8" max-width="450" class="pa-6" style="margin-left: 60px;">
@@ -20,13 +19,14 @@
             Ingresa tus credenciales para acceder.
           </v-card-subtitle>
 
+          <!-- Formulario -->
           <v-form @submit.prevent="handleLogin">
             <v-text-field
-              label="Correo electrónico"
-              v-model="email"
+              label="Usuario"
+              v-model="usuario"
               variant="outlined"
               prepend-inner-icon="mdi-email-outline"
-              placeholder="ejemplo@fesc.mx"
+              placeholder="User"
               class="mb-3"
             />
 
@@ -54,8 +54,6 @@
             <router-link to="/forgot-password" class="custom-link mb-3">
               ¿Olvidaste tu contraseña?
             </router-link>
-
-            
           </div>
 
         </v-card>
@@ -64,23 +62,41 @@
   </v-container>
 </template>
 
-
 <script>
+import { loginUser } from '@/services/login-conect';
+
 export default {
   name: 'LoginView',
   data () {
     return {
-      email: '',
-      password: ''
+      usuario: '',   
+      password: '',
     }
   },
   methods: {
-    handleLogin () {
-      // lógica de login
+    async handleLogin() {
+      // 1. Validar que los campos no estén vacíos antes de disparar la lógica
+      if (!this.usuario || !this.password) return;
+
+      try {
+        const response = await loginUser({
+          user: this.usuario,
+          password: this.password
+        });
+        
+        if (response) {
+          console.log('Login exitoso');
+          // Usar el router de forma segura
+          this.$router.push('/inicio');
+        }
+      } catch (error) {
+        console.error('Error capturado:', error.message);
+      }
     }
   }
 }
 </script>
+
 <style scoped>
 .login-background {
   background-image: url('@/assets/loginbackground.jpg');
@@ -89,4 +105,3 @@ export default {
   background-repeat: no-repeat;
 }
 </style>
-

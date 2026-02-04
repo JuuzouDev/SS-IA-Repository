@@ -22,7 +22,7 @@ const routes = [
     path: '/asistente',
     name: 'asistente',
     component: () => import('@/views/secure/asistente_virt.vue'),
-    meta: { requiresAuth : false}
+    meta: { requiresAuth : true}
   },
   {
     path: '/login',
@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = !!localStorage.getItem('authToken'); // Verifica si hay un token
   
   if (to.meta.requiresAuth && !isAuthenticated) {
-    next('/'); // Redirige al login si no está autenticado
+    next('/login'); // Redirige al login si no está autenticado
   } else {
     next(); // Permite el acceso
   }
