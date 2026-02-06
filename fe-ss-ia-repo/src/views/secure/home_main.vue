@@ -43,18 +43,17 @@
                 elevation="0"
                 
               >
-                <v-icon left>mdi-magnify</v-icon> EXPLORAR PROYECTOS
+                <v-icon left>mdi-magnify</v-icon> Explorar Proyectos
               </v-btn>
               
               <v-btn 
                 large 
-                text
-                color="grey darken-2" 
+                color="primary" 
                 class="px-6 font-weight-medium" 
                 to="/asistente"
                 elevation="0"
               >
-                <v-icon left>mdi-magnify</v-icon>Preguntar al Asistente
+                <v-icon left>mdi-magnify</v-icon>Preguntar a GEMINI
               </v-btn>
             </div>
         </div>

@@ -38,7 +38,7 @@
                 depressed
                 color="primary" 
                 class="white--text font-weight-bold" 
-                style="width: 280px; height: 50px;"
+                style="width: 280px; height: 50px; background-color: #1976D2 !important;"
                 to="/buscador"
               >
                 <v-icon left color="white">mdi-magnify</v-icon> EXPLORAR REPOSITORIO
@@ -49,11 +49,11 @@
                 depressed
                 color="primary" 
                 class="white--text font-weight-bold" 
-                style="width: 280px; height: 50px;"
+                style="width: 280px; height: 50px; background-color: #1976D2 !important;"
                 to="/asistente"
 
               >
-                <v-icon left color="white">mdi-robot-outline</v-icon>
+                <v-icon left color="white">mdi-magnify</v-icon>
                 PREGUNTALE A GEMINI
               </v-btn>
             </div>
