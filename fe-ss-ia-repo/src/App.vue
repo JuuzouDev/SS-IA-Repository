@@ -8,7 +8,8 @@
 
         <div class="ml-4 d-none d-sm-flex">
           <v-btn variant="text" to="/buscador">Buscador</v-btn>
-          <v-btn variant="text" to="/asistente">Asistente</v-btn>
+          <v-btn variant="text" to="/asistente">Asistente</v-btn> 
+          <v-btn v-if="isLoggedIn" variant="text" to="/add-project">Subir Proyecto</v-btn>
         </div>
 
         <v-spacer />

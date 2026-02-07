@@ -41,7 +41,7 @@
           <input 
             type="text" 
             v-model="searchTerm" 
-            @keyup.enter="performSearch" 
+            @input="performSearch"
             placeholder="Buscar por título, autor o palabra clave..."
             aria-label="Campo de búsqueda de proyectos"
           />
@@ -53,10 +53,10 @@
         <div v-if="filteredResults.length > 0" class="results-list">
           <h2>Resultados encontrados ({{ filteredResults.length }})</h2>
           
-          <div v-for="project in filteredResults" :key="project.id" class="project-card" role="article">
+          <div v-for="project in filteredResults" :key="project.id" class="project-card">
             <h3>{{ project.title }}</h3>
-            <p><strong>Autor(es):</strong> {{ project.author }}</p>
-            <p><strong>Tipo de IA:</strong> <span class="tag">{{ project.ia_type }}</span></p>
+            <p><strong>Autor(es):</strong> {{ project.authors }}</p>
+            <p><strong>Tipo de IA:</strong> <span class="tag">{{ project.ai_type }}</span></p>
             <p><strong>Año:</strong> {{ project.year }}</p>
             
             <router-link 
@@ -78,6 +78,8 @@
 </template>
 
 <script>
+import { getAllProjects } from '@/services/projects-conect';
+
 export default {
   name: 'fescia_buscador',
   data() {
@@ -88,55 +90,46 @@ export default {
       isLoading: false,
       searchPerformed: false,
       // Base de datos local de ejemplo
-      allProjects: [
-        {
-          id: 1,
-          title: "Detección de Anomalías en Imágenes Médicas",
-          author: "Ing. Roberto Sánchez",
-          ia_type: "Computer Vision",
-          year: 2023
-        },
-        {
-          id: 2,
-          title: "Chatbot para Atención al Alumno FESC",
-          author: "Alicia Villanueva",
-          ia_type: "NLP",
-          year: 2024
-        },
-        {
-          id: 3,
-          title: "Predicción de Tráfico mediante Redes Neuronales",
-          author: "Carlos Méndez",
-          ia_type: "Deep Learning",
-          year: 2022
-        }
-      ],
+      allProjects: [],
       filteredResults: []
     }
   },
-  mounted() {
+  async mounted() {
     // Cargar todos los proyectos al inicio
-    this.filteredResults = [...this.allProjects];
+    await this.fetchProjects();
   },
   methods: {
-    performSearch() {
+    async fetchProjects(){
       this.isLoading = true;
-      
-      // Simulamos un retraso de red
-      setTimeout(() => {
-        this.filteredResults = this.allProjects.filter(project => {
-          const matchText = project.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-                            project.author.toLowerCase().includes(this.searchTerm.toLowerCase());
-          const matchIA = this.filterIA === '' || project.ia_type === this.filterIA;
-          const matchYear = !this.filterYear || project.year === this.filterYear;
-          
-          return matchText && matchIA && matchYear;
-        });
-        
+      try {
+        //Llamado al API desde la funcion
+        const projects = await getAllProjects();
+        this.allProjects = projects;
+        this.filteredResults = [...this.allProjects];
+      }catch (error) { 
+        console.error("Error al cargar los proyectos: ", error.message);
+        //Posible alerta al usuario
+      } finally { 
         this.isLoading = false;
-        this.searchPerformed = true;
-      }, 400);
+      }
     },
+
+    performSearch() {
+      
+      //Filtrado sobre "allProjects" que ya trae datos del servidor
+      this.filteredResults = this.allProjects.filter(project =>{
+        //Ajuste de nombres de propíedades a como vienen desde la BD
+        const matchText = 
+          project.title.toLowerCase().includes(this.searchTerm.toLowerCase())||
+          project.authors.toLowerCase().includes(this.searchTerm.toLowerCase());
+        
+        const matchIA = this.filterIA === '' || project.ia_type === this.filterIA;
+        const matchYear = !this.filterYear || project.year === parseInt(this.filterYear);
+
+        return matchText && matchIA && matchYear;
+      });
+    },
+
     clearFilters() {
       this.searchTerm = '';
       this.filterIA = '';
