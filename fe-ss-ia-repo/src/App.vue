@@ -48,7 +48,8 @@
 
     <v-main class="background-full full-height-main">
       <router-view />
-//ASISTENTE VIRTUAL
+
+
       <v-menu
         v-if="$route.path !== '/login'"
         v-model="chatOpen"
