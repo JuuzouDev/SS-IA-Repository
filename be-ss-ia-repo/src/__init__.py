@@ -13,7 +13,8 @@ def create_app():
 
     #Carga de las Configuraciones completa
     app.config.from_object(DevelopmentConfig)
-
+    #inicializar carpeta de Archivos PDF
+    DevelopmentConfig.init_app(app)
     #Inicializacion de Extenciones
     jwt.init_app(app)
     db.init_app(app)
@@ -25,9 +26,12 @@ def create_app():
     #importacion
     from .routes.main import main_bp
     from .routes.auth import auth_bp
+    from .routes.projects import projects_bp
     
     #registro
     app.register_blueprint(main_bp)
-    app.register_blueprint(auth_bp, url_prefix='/be/auth')
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(projects_bp, url_prefix='/projects')
+
 
     return app

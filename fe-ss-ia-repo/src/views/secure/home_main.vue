@@ -31,7 +31,7 @@
               Explora y gestiona proyectos de vanguardia en Inteligencia Artificial y reportes de Servicio Social de la comunidad FESC. Conecta el conocimiento académico con la solución de problemas reales.
             </p>
 
-            <v-divider style="max-width: 50px; border-color: #333333 !important;" class="mb-8"></v-divider>
+            
 
             <div class="cta-buttons d-flex flex-wrap justify-center" style="gap: 20px;"> 
               
@@ -66,7 +66,7 @@
 
 <script>
 // La importación de la imagen del robot es necesaria si usas la imagen de fondo en el CSS
-import robotImage from '@/assets/image_268ab0.jpg'; 
+import robotImage from '@/assets/fondo2.png'; 
 
 export default{
   name: 'home_main_centered_full_screen_bg_fixed',
@@ -98,7 +98,7 @@ export default{
     height: 100%;
     
     /* Aplicación de la imagen */
-    background-image: url('~@/assets/image_268ab0.jpg'); 
+    background-image: url('~@/assets/fondo2.png'); 
     background-size: cover;      /* Escala la imagen para cubrir todo el contenedor */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat;

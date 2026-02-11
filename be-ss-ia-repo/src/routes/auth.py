@@ -3,6 +3,8 @@ from werkzeug.security import check_password_hash
 from src.models import db, User # Importar Instancia de la BD y el user
 from sqlalchemy import text 
 from flask_jwt_extended import create_access_token
+
+
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/login', methods=['POST'])

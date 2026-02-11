@@ -76,7 +76,7 @@
 
 <script>
 // ¡IMPORTACIÓN CLAVE! Esto asegura que Webpack procese correctamente la imagen.
-import robotImage from '@/assets/image_268ab0.jpg'; 
+import robotImage from '@/assets/fondo2.png'; 
 
 export default{
   name: 'home_main_with_image_fix',
