@@ -46,7 +46,7 @@ export const saveProject = async (projectFormData) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Error detallado:", error.response); // Esto te dirá qué pasó
+        console.error("Error detallado:", error.response); // Mensaje de error
         const errorMessage = error.response?.data?.message || "Error de conexión con el servidor";
         throw new Error(errorMessage);
     }

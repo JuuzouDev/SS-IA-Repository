@@ -19,12 +19,6 @@ const routes = [
     meta: { requiresAuth : false} 
   },
   {
-    path: '/asistente',
-    name: 'asistente',
-    component: () => import('@/views/secure/asistente_virt.vue'),
-    meta: { requiresAuth : true}
-  },
-  {
     path: '/login',
     name: 'login',
     component: () => import('@/views/secure/loginView.vue'),

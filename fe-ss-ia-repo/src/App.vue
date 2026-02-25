@@ -8,7 +8,6 @@
 
         <div class="ml-4 d-none d-sm-flex">
           <v-btn variant="text" to="/buscador">Buscador</v-btn>
-          <v-btn variant="text" to="/asistente">Asistente</v-btn> 
           <v-btn v-if="isLoggedIn" variant="text" to="/add-project">Subir Proyecto</v-btn>
         </div>
 
@@ -113,6 +112,8 @@
               density="compact"
               variant="outlined"
               append-inner-icon="mdi-send"
+              :loading="isWaitingIA"
+              :disabled="isWaitingIA"
               @click:append-inner="enviarMensaje"
               @keyup.enter="enviarMensaje"
             ></v-text-field>
@@ -126,6 +127,8 @@
 <script>
 // IMPORTACIÓN DE LA IMAGEN PARA WEBPACK
 import asistenteImg from '@/assets/Asistente.jpg';
+import { askAssistant } from './services/assistant_conect';
+
 
 export default {
   name: 'App',
@@ -141,7 +144,8 @@ export default {
       nuevoMensaje: '',
       mensajes: [
         { text: '¡Hola! Soy el asistente del Repositorio FESC. ¿En qué puedo ayudarte?', sender: 'ia' }
-      ]
+      ],
+      isWaitingIA: false,
     }
   },
   computed: {
@@ -161,21 +165,37 @@ export default {
       localStorage.removeItem('username');
       localStorage.removeItem('userRole');
       this.token = null;
-      this.$router.push('/login');
+      this.$router.push('/inicio');
     },
-    enviarMensaje() {
-      if (this.nuevoMensaje.trim()) {
-        this.mensajes.push({ text: this.nuevoMensaje, sender: 'usuario' });
-        this.nuevoMensaje = '';
+    async enviarMensaje(){
+      if (!this.nuevoMensaje.trim()) return;
+      const userText = this.nuevoMensaje;
 
-        setTimeout(() => {
-          this.mensajes.push({ 
-            text: 'Entendido. Estoy analizando tu consulta para darte la mejor respuesta.', 
-            sender: 'ia' 
-          });
-        }, 800);
+      // 1.- Añadir mensaje de usuario a la lista
+      this.mensajes.push({text: userText, sender: 'usuario'});
+      this.nuevoMensaje = '';
+      
+      //2.- Añadir Mensaje de "Escribiendo"
+      const loadintMsgIndex = this.mensajes.length;
+      this.mensajes.push ({text: "Pensando...", sender: 'ia', isLoading: true});
+
+      //Comunicacion con BE
+      try{
+        //3.- Llamada real al API
+        const response =  await askAssistant(userText);
+
+        //4.- Reemplazar "Pensando" con la respuesta real
+        this.mensajes[loadintMsgIndex].text = response;
+        this.mensajes[loadintMsgIndex].isLoading = false;
+      
+      } catch (error) { 
+        //Manejo de error visual
+        this.mensajes[loadintMsgIndex].text = 'Lo siento, tuve un error al conectarme con mi motor de IA. Intentalo de nuevo mas tarde.';
+        this.mensajes[loadintMsgIndex].isLoading = false;
       }
+
     }
+
   }
 }
 </script>
