@@ -33,8 +33,7 @@
 
             
 
-            <div class="cta-buttons d-flex flex-wrap justify-center" style="gap: 20px;"> 
-              
+            <div class="cta-buttons d-flex justify-center align-center"> 
               <v-btn 
                 large 
                 color="primary" 
@@ -43,17 +42,8 @@
                 elevation="0"
                 
               >
-                <v-icon left>mdi-magnify</v-icon> Explorar Proyectos
-              </v-btn>
-              
-              <v-btn 
-                large 
-                color="primary" 
-                class="px-6 font-weight-medium" 
-                to="/asistente"
-                elevation="0"
-              >
-                <v-icon left>mdi-magnify</v-icon>Preguntar a GEMINI
+                <v-icon left>mdi-magnify</v-icon> 
+                Explorar Proyectos
               </v-btn>
             </div>
         </div>
