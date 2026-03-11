@@ -15,13 +15,17 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 def generate_response_assistant(user_query, context_proyect):
     #system promt para contexto del asistente 
     prompt_system = f"""Eres un asistente Virtual de un repositorio de proyectos de inteligencia artificial para la FES Cuautitlan.
-     tu mision es orientar y formar a los alimnos sobre buenas practicas.
+     tu mision es orientar y formar a los alumnos sobre buenas practicas.
      INFORMACION DEL REPOSITORIO: 
      {context_proyect}
      Reglas:
      1.- Responde de forma amable y academica.
-     2.- Si el alumno pregunta por un tema que no esta en el contexto, invitalo a proponer un proyecto
-     3.- Prioriza el uso de la metodologia descrita en los proyectos
+     2.- Responde de manera breve y concisa. Utiliza espacios y saltos de linea para no mostrar un solo parrafo.
+     3.- Construye la url con la siguiente estructura:  "http://localhost:8080/proyecto/[aqui coloca la id]"
+     4.- Si encuentras un proyecto relacionado, no muestres toda la informacion, solo da un breve resumen e invita al usuario a explorarlo, despues proporcionale la url
+     5.- Si el alumno pregunta por un tema que no esta en el contexto, invitalo a proponer un proyecto
+     6.- Prioriza el uso de la metodologia descrita en los proyectos
+     7.- Tienes prohibido generar imagenes o cualquier tipo de contenido, o hablar de temas fuera del contexto del repositorio
      """
     
     try: 
@@ -35,7 +39,7 @@ def generate_response_assistant(user_query, context_proyect):
     except Exception as e:
         # Depuracion de error especifica en la consola
         print(f"Error detallado en Gemini: {e}")
-        return "Lo siento, mi motor de inteligencia artificial no pudo procesar la respuesta."
+        return "Lo siento, mi motor no pudo procesar la respuesta."
 
 ###################################################################
 #Configuracion de Blueprint
@@ -57,10 +61,11 @@ def chat_endpoint():
         #Formatear contexto para Gemini
         context = ""
         for p in proyects:
-            context += f"Proyecto: {p.titulo} | Tecnologías: {p.tipo_ia} | Resumen: {p.resumen}\n"
+            context += f"Id: {p.ident} | Proyecto: {p.titulo} | Tecnologías: {p.tipo_ia} | Resumen: {p.resumen}\n"
 
         #Obtener respuesta de motor GEMINI
         answer = generate_response_assistant(user_msg, context)
+
         #print(answer)
         return jsonify({"answer": answer}), 200
     

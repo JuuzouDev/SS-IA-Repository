@@ -34,7 +34,7 @@ const routes = [
     path: '/add-project',
     name: 'add-project',
     component: () => import('@/views/secure/Add-project.vue'),
-    meta: { requiresAuth : false}
+    meta: { requiresAuth : true}
   }, 
   {
   path: '/proyecto/:id',
